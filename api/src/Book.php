@@ -56,21 +56,42 @@ class Book implements JsonSerializable {
         }
     }
     
-    public function loadFromDbById(mysqli $conn, $bookId) {
+    static public function loadFromDbById(mysqli $conn, $bookId) {
         $bookId = $conn->real_escape_string($bookId);
         
         $sql = "SELECT book_author, book_title, book_description "
                 . "FROM book WHERE book_id = $bookId";
         if ($res = $conn->query($sql)) {
             $row = $res->fetch_assoc();
-            $this->bookAuthor = $row['book_author'];
-            $this->bookTitle = $row['book_title'];
-            $this->bookDescription = $row['book_description'];
-            $this->bookId = $bookId;
-            return true;
+            $book = new Book();
+            $book->bookAuthor = $row['book_author'];
+            $book->bookTitle = $row['book_title'];
+            $book->bookDescription = $row['book_description'];
+            $book->bookId = $bookId;
+            return $book;
         } else {
             return false;
         } 
+    }
+    
+    static public function loadAllFromDb(mysqli $conn) {
+        $books = [];
+        
+        $sql = "SELECT * FROM book";
+        $result = $conn->query($sql);
+        if ($result && $result->num_rows > 0) {
+            foreach ($result as $row) {
+                $book = new Book;
+                $book->bookAuthor = $row['book_author'];
+                $book->bookDescription = $row['book_description'];
+                $book->bookTitle = $row['book_title'];
+                $book->bookId = $row['book_id'];
+                $books[$book->bookId] = $book;
+            }
+            return $books;
+        } else {
+            return false;
+        }
     }
     
     public function createBook(mysqli $conn, $author, $title, $description) {

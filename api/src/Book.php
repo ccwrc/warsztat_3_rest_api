@@ -56,18 +56,18 @@ class Book implements JsonSerializable {
         }
     }
     
-    static public function loadFromDbById(mysqli $conn, $bookId) {
-        $bookId = $conn->real_escape_string($bookId);
+    static public function loadFromDbById(mysqli $conn, $id) {
+        $id = $conn->real_escape_string($id);
         
         $sql = "SELECT book_author, book_title, book_description "
-                . "FROM book WHERE book_id = $bookId";
+                . "FROM book WHERE book_id = $id";
         if ($res = $conn->query($sql)) {
             $row = $res->fetch_assoc();
             $book = new Book();
             $book->bookAuthor = $row['book_author'];
             $book->bookTitle = $row['book_title'];
             $book->bookDescription = $row['book_description'];
-            $book->bookId = $bookId;
+            $book->bookId = $id;
             return $book;
         } else {
             return false;
@@ -112,11 +112,11 @@ class Book implements JsonSerializable {
         }
     }
     
-    public function updateBook(mysqli $conn, $author, $title, $description) {
+    public function updateBook(mysqli $conn, $author, $title, $description, $id) {
         $author = $conn->real_escape_string($author);
         $title = $conn->real_escape_string($title);
         $description = $conn->real_escape_string($description);
-        $id = $conn->real_escape_string($this->bookId);
+        $id = $conn->real_escape_string($id);
         
         $sql = "UPDATE book SET book_author = '$author', book_title = '$title', "
                 . "book_description = '$description' WHERE book_id = $id";
@@ -130,15 +130,11 @@ class Book implements JsonSerializable {
         }
     }
     
-    public function deleteFromDb(mysqli $conn) {
-        $id = $conn->real_escape_string($this->bookId);
+    static public function deleteFromDb(mysqli $conn, $id) {
+        $id = $conn->real_escape_string($id);
         
         $sql = "DELETE FROM book WHERE book_id = $id";
         if ($res = $conn->query($sql)) {
-            $this->bookAuthor = "";
-            $this->bookDescription = "";
-            $this->bookId = -1;
-            $this->bookTitle = "";
             return true;
         } else {
             return false;

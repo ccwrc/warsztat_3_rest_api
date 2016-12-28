@@ -1,7 +1,7 @@
 <?php
 
 function getDbConnection() {
-    $DB_SERVER = "localhost";
+    $DB_SERVER = "127.0.0.1"; //change localhost for endpoint (app.js) - no result
     $DB_USERNAME = "books";
     $DB_PASSWORD = "tajnehaslo";
     $DB_DATABASE = "books";
@@ -12,10 +12,10 @@ function getDbConnection() {
        die("Brak połączenia z bazą danych, błąd: " . $conn->errno);
     }
 
-    $setEncodingSql = "SET CHARSET utf8"; //poprawne zwracanie pl znakow
+    $setEncodingSql = "SET CHARSET utf8"; //correct returning pl characters
     $conn->query($setEncodingSql);
 
-    return $conn; //pamietac o zamknieciu po kazdej operacji (close+null)
+    return $conn; //remember to close after operation (close+null)
 }
 
 ?>

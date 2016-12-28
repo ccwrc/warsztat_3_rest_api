@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $book = new Book();
         $book->createBook($conn, $author, $title, $description);
         echo json_encode($book);
-       } // ew. else z echo nie wypel wszyst poz (na poxniej)
+       } 
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
@@ -55,4 +55,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
 $conn->close();
 $conn = null;  
+
 ?>

@@ -15,15 +15,14 @@ $(document).ready(function() {
                 .done(function(json) {
                     console.log(json);
                     var bookDetails = json; 
-                    display.append("<div> Autor: " + bookDetails.bookauthor + "<br/> Opis: " 
+                    display.append("<div class='displayBook'> Autor: " + bookDetails.bookauthor + "<br/> Opis: " 
                             + bookDetails.bookdescription + '<form class="editBook"> Edycja książki: \n\
-                            <br/>' + '<input type="text" name="title" value="' + bookDetails.booktitle +
-                            '"/><br/>' + '<input type="text" name="author" value="' 
-                            + bookDetails.bookauthor + '"/><br/>' + '<input type="text" name="description" value="' 
+                            <br/>' + '<input size="100" type="text" name="title" value="' + bookDetails.booktitle +
+                            '"/><br/>' + '<input size="100" type="text" name="author" value="' 
+                            + bookDetails.bookauthor + '"/><br/>' + '<input size="100" type="text" name="description" value="' 
                             + bookDetails.bookdescription + '"/><br/>' + '<input type="submit" \n\
                             class="edit" value="Edytuj książkę"\n\
-                            name="' + bookDetails.bookid + '"/></form> <button class="delete" \n\
-                            value="' + bookDetails.bookid + '">Usuń książkę</button><br/></div>' );
+                            name="' + bookDetails.bookid + '"/></form> <button class="delete" value="' + bookDetails.bookid + '">Lub usuń książkę</button><br/></div><br/>' );
                     
                     $('.delete').click(deleteBook);
                     $('.editBook').on('submit', function(e) {

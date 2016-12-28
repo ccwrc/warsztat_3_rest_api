@@ -57,6 +57,7 @@ class Book implements JsonSerializable {
     }
     
     static public function loadFromDbById(mysqli $conn, $id) {
+        $id = htmlentities($id, ENT_QUOTES, "UTF-8");
         $id = $conn->real_escape_string($id);
         
         $sql = "SELECT book_author, book_title, book_description "
@@ -95,6 +96,10 @@ class Book implements JsonSerializable {
     }
     
     public function createBook(mysqli $conn, $author, $title, $description) {
+        $author = htmlentities($author, ENT_QUOTES, "UTF-8");
+        $title = htmlentities($title, ENT_QUOTES, "UTF-8");
+        $description = htmlentities($description, ENT_QUOTES, "UTF-8");
+        
         $author = $conn->real_escape_string($author);
         $title = $conn->real_escape_string($title);
         $description = $conn->real_escape_string($description);
@@ -113,6 +118,11 @@ class Book implements JsonSerializable {
     }
     
     public function updateBook(mysqli $conn, $author, $title, $description, $id) {
+        $author = htmlentities($author, ENT_QUOTES, "UTF-8");
+        $title = htmlentities($title, ENT_QUOTES, "UTF-8");
+        $description = htmlentities($description, ENT_QUOTES, "UTF-8");
+        $id = htmlentities($id, ENT_QUOTES, "UTF-8");
+        
         $author = $conn->real_escape_string($author);
         $title = $conn->real_escape_string($title);
         $description = $conn->real_escape_string($description);
@@ -131,6 +141,7 @@ class Book implements JsonSerializable {
     }
     
     static public function deleteFromDb(mysqli $conn, $id) {
+        $id = htmlentities($id, ENT_QUOTES, "UTF-8");
         $id = $conn->real_escape_string($id);
         
         $sql = "DELETE FROM book WHERE book_id = $id";

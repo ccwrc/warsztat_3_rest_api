@@ -3,7 +3,7 @@ html, body {
   margin:0;
   padding:0;
   height:100%;
-  background-image: url("../api/src/img/notebook.png");
+  background-image: url("../img/notebook.png");
   /* Pattern grey_sandbag is downloaded from www.subtlepatterns.com */
   }
   
@@ -19,7 +19,7 @@ div#mainContainer {
   
 div#mainLogo { 
   /* http://www.forumweb.pl/poczatkujacy-webmaster/tekst-alternatywny-w-css,51325 */
-  background-image: url("../api/src/img/logo.png");
+  background-image: url("../img/logo.png");
   width: 890px; 
   min-height:175px;
   margin: 5px;

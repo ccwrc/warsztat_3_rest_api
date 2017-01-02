@@ -1,7 +1,7 @@
 <?php
 
 function getDbConnection() {
-    $DB_SERVER = "127.0.0.1"; //change localhost for endpoint (app.js) - no result
+    $DB_SERVER = "localhost"; 
     $DB_USERNAME = "books";
     $DB_PASSWORD = "tajnehaslo";
     $DB_DATABASE = "books";

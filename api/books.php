@@ -6,7 +6,6 @@ require_once 'src/connect.php';
 $conn = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    
     if (isset($_GET['id']) && trim($_GET['id']) != ""
         && is_numeric($_GET['id']) && ($_GET['id'] > 0)) {
         $book = Book::loadFromDbById($conn, $_GET['id']);
@@ -51,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $book->updateBook($conn, $author, $title, $description, $id);
     echo json_encode($book);
 }
-
 
 $conn->close();
 $conn = null;  

@@ -1,9 +1,8 @@
 
 $(document).ready(function() {
     
-    // var endpoint = "http://localhost/warsztat_3_rest_api/api/books.php"; //work on localhost
-    // var endpoint = window.location + '/api/books.php'; // not work on localhost
-    // var endpoint = 'api/books.php'; //work...
+    // var endpoint = "http://localhost/warsztat_3_rest_api/api/books.php"; //example
+    // var endpoint = 'api/books.php'; //example
     var endpoint = window.location.origin + '/warsztat_3_rest_api/api/books.php';
 
     addEventToCreateNewBook();

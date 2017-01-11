@@ -152,34 +152,6 @@ class Book implements JsonSerializable {
         }
     }
     
-    /* old test version:
-    public function saveToDb(mysqli $conn) {
-        $safeId = $conn->real_escape_string($this->bookId);
-        $safeBookAuthor = $conn->real_escape_string($this->bookAuthor);
-        $safeBookTitle = $conn->real_escape_string($this->bookTitle);
-        $safeBookDescription = $conn->real_escape_string($this->bookDescription);
-        
-        if ($safeId == -1) {
-            $sql = "INSERT INTO book (book_author, book_description, book_title) VALUES "
-                    . "('$safeBookAuthor', '$safeBookDescription', '$safeBookTitle')";
-            $result = $conn->query($sql);
-            if ($result == true) {
-                $safeId = $conn->insert_id;
-                return true;
-            } else {
-                $sql = "UPDATE book SET book_author = $safeBookAuthor, "
-                        . "book_title = '$safeBookTitle', book_description = '$safeBookDescription'"
-                        . "WHERE book_id = $safeId";
-                $result = $conn->query($sql);
-                if ($result) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-    */
-    
     public function jsonSerialize() {
        return [
           'booktitle' => $this->bookTitle,

@@ -21,3 +21,8 @@ Div ten ma też zawierać formularz służący do edycji tej książki (AJAX, me
 api/books.php?id=1&Name=""&autor="").
 - Obok nazwy ma się znajdować guzik służący do usuwania książki (AJAX, metoda DELETE na
 endpoint api/books.php?id=1)
+
+#
+
+Roboczy zrzut ekranu:
+![Alt text](https://images86.fotosik.pl/22/5cfc590074f30273.png "work_screen")

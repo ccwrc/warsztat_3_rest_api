@@ -1,42 +1,39 @@
 <!DOCTYPE HTML>
 <html lang="pl">
-<head>
-	<meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <!-- http://www.kurshtml.edu.pl/css/x_ua_compatible,quirks.html -->
-	<meta name="author" content="ccwrc">
+        <meta name="author" content="ccwrc">
         <title>The Bookstore</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css" />
-
-	<script src="js/jquery-3.1.1.min.js"></script>
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
+        <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/app.js"></script>	
-</head>
+    </head>
 
-<body>
- <div id="mainContainer"> 
-       
-    <div id="mainLogo">
-    </div>   
-       
-    <div id="newBook">
-        <form action="#" method="POST" name="addBook">
-            <label> <h4>Podaj dane nowej książki:</h4>
-                <input type="text" size="100" name="title" placeholder="Tu wpisz tytuł książki" 
-                       pattern=".{1,255}" required title="Minimalna liczba znaków to 1, maksymalna 255"/> <br/>
-                <input type="text" size="100" name="author" placeholder="Imię i nazwisko autora" 
-                       pattern=".{1,255}" required title="Minimalna liczba znaków to 1, maksymalna 255"/> <br/>
-                <input type="text" size="100" name="description" placeholder="Oraz krótki opis" 
-                       pattern=".{1,25000}" required title="Minimalna liczba znaków to 1, maksymalna 25000"/> <br/>
-                <input type="submit" name="addBook" value="Kliknij żeby dodać" /> <br/><br/>
-            </label>
-        </form>
-    </div>
-    
-    <h4>Pełna lista książek poniżej. Kliknij na tytuł żeby rozwinąć szczegóły.</h4>
-    <div class="booksList">
-       <!--empty div for generate books in js --> 
-    </div>
-    
- </div>
-</body>
+    <body>
+        <div id="mainContainer"> 
+
+            <div id="mainLogo">
+            </div>   
+
+            <div id="newBook">
+                <form action="#" method="POST" name="addBook">
+                    <h4>Podaj dane nowej książki:</h4>
+                    <input type="text" size="100" name="title" placeholder="Tu wpisz tytuł książki" 
+                           pattern=".{1,255}" required title="Minimalna liczba znaków to 1, maksymalna 255"/> <br/>
+                    <input type="text" size="100" name="author" placeholder="Imię i nazwisko autora" 
+                           pattern=".{1,255}" required title="Minimalna liczba znaków to 1, maksymalna 255"/> <br/>
+                    <input type="text" size="100" name="description" placeholder="Oraz krótki opis" 
+                           pattern=".{1,25000}" required title="Minimalna liczba znaków to 1, maksymalna 25000"/> <br/>
+                    <input type="submit" name="addBook" value="Kliknij żeby dodać" /> <br/><br/>                  
+                </form>
+            </div>
+
+            <h4>Pełna lista książek poniżej. Kliknij na tytuł żeby rozwinąć szczegóły.</h4>
+            <div class="booksList">
+                <!--empty div for generate books in js --> 
+            </div>
+
+        </div>
+    </body>
 </html>

@@ -7,14 +7,11 @@ function getDbConnection() {
     $DB_DATABASE = "books";
 
     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+    $conn->query("SET CHARSET UTF8");
 
     if ($conn->connect_error) {
         die("Brak połączenia z bazą danych, błąd: " . $conn->errno);
     }
 
-    $setEncodingSql = "SET CHARSET utf8"; //correct returning pl characters
-    $conn->query($setEncodingSql);
-
-    return $conn; //remember to close after operation (close+null)
+    return $conn;
 }
-

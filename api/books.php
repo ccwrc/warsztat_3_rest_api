@@ -1,14 +1,15 @@
 <?php
 
-require_once 'src/Book.php';
-require_once 'src/connect.php';
+require_once "src/Book.php";
+require_once "src/connect.php";
 
 $conn = getDbConnection();
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['id']) && trim($_GET['id']) != "" && is_numeric($_GET['id']) 
-            && ($_GET['id'] > 0)) {
-        $book = Book::loadFromDbById($conn, $_GET['id']);
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    if (isset($_GET["id"]) && trim($_GET["id"]) != "" && is_numeric($_GET["id"]) 
+            && ($_GET["id"] > 0)) {
+        
+        $book = Book::loadFromDbById($conn, $_GET["id"]);
         $serializedData = json_encode($book);
         echo $serializedData;
     } else {
@@ -18,14 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['author']) && (trim($_POST['author']) != "") && isset($_POST['title']) 
-            && (trim($_POST['title']) != "") && isset($_POST['description']) 
-            && (trim($_POST['description']) != "")) {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["author"]) && (trim($_POST["author"]) != "") && isset($_POST["title"]) 
+            && (trim($_POST["title"]) != "") && isset($_POST["description"]) 
+            && (trim($_POST["description"]) != "")) {
 
-        $author = $_POST['author'];
-        $title = $_POST['title'];
-        $description = $_POST['description'];
+        $author = $_POST["author"];
+        $title = $_POST["title"];
+        $description = $_POST["description"];
 
         $book = new Book();
         $book->createBook($conn, $author, $title, $description);
@@ -33,18 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    parse_str(file_get_contents("php://input"), $del_vars);
-    $book = Book::deleteFromDb($conn, $del_vars['id']);
+if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
+    parse_str(file_get_contents("php://input"), $delVars);
+    $book = Book::deleteFromDb($conn, $delVars["id"]);
     echo json_encode($book);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    parse_str(file_get_contents("php://input"), $put_vars);
-    $id = $put_vars['id'];
-    $author = $put_vars['author'];
-    $title = $put_vars['title'];
-    $description = $put_vars['description'];
+if ($_SERVER["REQUEST_METHOD"] === "PUT") {
+    parse_str(file_get_contents("php://input"), $putVars);
+    $id = $putVars["id"];
+    $author = $putVars["author"];
+    $title = $putVars["title"];
+    $description = $putVars["description"];
 
     $book = new Book();
     $book->updateBook($conn, $author, $title, $description, $id);
@@ -53,4 +54,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
 $conn->close();
 $conn = null;
-?>

@@ -1,26 +1,23 @@
 
-$(document).ready(function() {
-    
-    // var endpoint = "http://localhost/warsztat_3_rest_api/api/books.php"; //example
-    // var endpoint = 'api/books.php'; //example
+$(document).ready(function () {
+
     var endpoint = window.location.origin + '/warsztat_3_rest_api/api/books.php';
 
     addEventToCreateNewBook();
-    showAllBooks();
-    
+    loadAndShowAllBooks();
+
     function showBookDetails() {
-        var display = $(this);  
+        var display = $(this);
         $.ajax({
             url: endpoint,
-        // https://api.jquery.com/get/    
-        // http://stackoverflow.com/questions/8160585/use-get0-or-html-to-return-html-with-jquery
             data: 'id=' + $(this).get(0).id,
             type: 'GET',
             dataType: 'json'
         })
                 .done(function (json) {
                     var bookDetails = json;
-                    display.append("<div class='displayBook'> Autor: " + bookDetails.bookauthor + "<br/> Opis: "
+                    display.append("<div class='displayBook'> <button class='toHide'>Zwiń opisy</button>\n\
+                            <br/> Autor: " + bookDetails.bookauthor + "<br/> Opis: "
                             + bookDetails.bookdescription + '<form class="editBook"> <strong>Edycja książki:</strong> \n\
                             <br/>' + '<input size="100" type="text" name="title" value="' + bookDetails.booktitle +
                             '"/><br/>' + '<input size="100" type="text" name="author" value="'
@@ -35,9 +32,13 @@ $(document).ready(function() {
                         e.preventDefault();
                         editBook(this)
                     });
+
+                    $(".toHide").on("click", function () {
+                        location.reload(true);
+                    });
                 });
     }
-    
+
     function deleteBook() {
         var bookToDelete = $(this).attr('value');
         console.log(bookToDelete);
@@ -55,15 +56,15 @@ $(document).ready(function() {
                     alert("Książka się opiera, spróbuj później");
                 });
     }
-    
-    function editBook(form) {   
+
+    function editBook(form) {
         var bookToEdit = {
             id: $(form).find('.edit').attr('name'),
             title: $(form).find('[name=title]').val(),
             author: $(form).find('[name=author]').val(),
             description: $(form).find('[name=description]').val()
         };
-        
+
         $.ajax({
             url: endpoint,
             data: bookToEdit,
@@ -78,9 +79,9 @@ $(document).ready(function() {
                     alert("Książka się opiera, spróbuj później");
                 });
     }
-    
+
     function addEventToCreateNewBook() {
-        $('form[name="addBook"]').on('submit', function(e) {
+        $('form[name="addBook"]').on('submit', function (e) {
             e.preventDefault();
 
             var indexForm = {
@@ -104,15 +105,15 @@ $(document).ready(function() {
                     });
         });
     }
-    
-    function showAllBooks() { 
+
+    function loadAndShowAllBooks() {
         $.ajax({
             url: endpoint,
             data: {},
             type: "GET",
             dataType: "json"
         })
-                .done(function (json) { // http://mozillapl.org/forum/viewtopic.php?t=31798
+                .done(function (json) {
                     var books = json;
                     $.each(books, function (object, book) {
                         var book = $("<div id='" + book.bookid + "''class='displayBook'>" + book.booktitle
@@ -127,7 +128,7 @@ $(document).ready(function() {
                 .fail(function () {
                     alert("Baza książek jest pusta");
                 });
-    }            
-    
-    
+    }
+
+
 });

@@ -30,7 +30,8 @@ class Book implements JsonSerializable {
     }
 
     public function setBookTitle($bookTitle) {
-        if (is_string($bookTitle) && (strlen($bookTitle) <= 255)) {
+        if ((strlen(trim($bookTitle)) >= 1) && (strlen(trim($bookTitle)) <= 255)) {
+            $bookTitle = htmlentities(trim($bookTitle), ENT_QUOTES, "UTF-8");
             $this->bookTitle = $bookTitle;
             return $this;
         } else {

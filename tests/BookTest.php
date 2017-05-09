@@ -6,6 +6,7 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
 
     public function getConnection() {
         $conn = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
+        $conn->query("SET CHARSET UTF8");
         return new PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection($conn, $GLOBALS['DB_NAME']);
     }
 
@@ -24,10 +25,26 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertInstanceOf("Book", self::$emptyBook);
     }
     
-    public function testTrue() {
-        $this->assertTrue(true);
+    public function testGetBookId() {
+        $this->assertEquals(-1, self::$emptyBook->getBookId());
     }
     
-    /////////////////////
+    public function testGetBookTitle() {
+        $this->assertEquals("", self::$emptyBook->getBookTitle());
+    }
+    
+    public function testGetBookAuthor() {
+        $this->assertEquals("", self::$emptyBook->getBookAuthor());
+    }
+
+    public function testGetBookDescription() {
+        $this->assertEquals("", self::$emptyBook->getBookDescription());
+    }    
+    
+    public function testSetBookTitle() {
+        self::$emptyBook->setBookTitle("title");
+        $this->assertEquals("title", self::$emptyBook->getBookTitle());
+        $this->assertFalse(self::$emptyBook->setBookTitle("    "));
+    }
 
 }

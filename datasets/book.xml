@@ -4,14 +4,34 @@
     
     <book 
         book_id="1" 
-        book_title="1" 
-        book_author="1"
-        book_description="2016-11-07 13:33:00"  />
+        book_title="tytł 1" 
+        book_author="autor 1 książki"
+        book_description="opis dla ksiązki 1"  />
     
-
+    <book 
+        book_id="2" 
+        book_title="tytł 2" 
+        book_author="autor 2 książki"
+        book_description="opis dla ksiązki 2"  />
     
+    <book 
+        book_id="3" 
+        book_title="tytł 3" 
+        book_author="autor 3 książki"
+        book_description="opis dla ksiązki 3"  />
+    
+    <book 
+        book_id="4" 
+        book_title="tytł 4" 
+        book_author="autor 4 książki"
+        book_description="opis dla ksiązki 4"  />
+    
+    <book 
+        book_id="5" 
+        book_title="tytł 5" 
+        book_author="autor 5 książki"
+        book_description="opis dla ksiązki 5"  />            
  
-
 </dataset>
 
 <!-- book_id  book_title 	book_author  book_description  -->

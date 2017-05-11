@@ -85,6 +85,18 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertFalse($book->updateBook("a", "b", " "));
     }
     
+    public function testDeleteFromDbById() {
+        $this->assertFalse(Book::deleteFromDbById(self::$myConn, "abc"));
+        $this->assertTrue(Book::deleteFromDbById(self::$myConn, 4));
+    }
     
-
+    public function testSaveToDb() {
+        $this->assertTrue(self::$emptyBook->saveToDb(self::$myConn));
+    }
+    
+    public function testJsonSerialize() {
+        $book = Book::loadFromDbById(self::$myConn, 1);
+        $this->assertInternalType("array", $book->jsonSerialize());
+    }
+    
 }

@@ -111,7 +111,7 @@ class Book implements JsonSerializable {
         return false;
     }
 
-    public static function deleteFromDb(mysqli $conn, $id) {
+    public static function deleteFromDbById(mysqli $conn, $id) {
         if (!is_numeric($id) || $id < 0) {
             return false;
         }    
@@ -124,15 +124,6 @@ class Book implements JsonSerializable {
         }
         $statement->close();
         return false;
-    }
-
-    public function jsonSerialize() {
-        return [
-            'booktitle' => $this->bookTitle,
-            'bookauthor' => $this->bookAuthor,
-            'bookdescription' => $this->bookDescription,
-            'bookid' => $this->bookId
-        ];
     }
     
     public function saveToDb(mysqli $conn) {
@@ -161,6 +152,15 @@ class Book implements JsonSerializable {
             $statement->close();
             return false;
         }
+    }
+    
+    public function jsonSerialize() {
+        return [
+            'booktitle' => $this->bookTitle,
+            'bookauthor' => $this->bookAuthor,
+            'bookdescription' => $this->bookDescription,
+            'bookid' => $this->bookId
+        ];
     }
 
 }

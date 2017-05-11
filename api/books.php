@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "PUT") {
 if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
     parse_str(file_get_contents("php://input"), $delVars);
 
-    $bookToDelete = Book::deleteFromDb($conn, $delVars["id"]);
+    $bookToDelete = Book::deleteFromDbById($conn, $delVars["id"]);
     if ($bookToDelete) {
         echo json_encode($bookToDelete);
     }

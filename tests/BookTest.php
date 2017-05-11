@@ -67,6 +67,16 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertFalse(Book::loadFromDbById(self::$myConn, "abc"));
     }
     
+    public function testLoadAllFromDb() {
+        $books = Book::loadAllFromDb(self::$myConn);
+        $this->assertInstanceOf("Book", $books[1]);
+        $this->assertEquals("tytł 2", $books[1]->getBookTitle());
+    }
+    
+    public function testCreateBook() {
+        //
+    }
+    
     
 
 }

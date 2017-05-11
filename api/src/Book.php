@@ -75,24 +75,21 @@ class Book implements JsonSerializable {
         return false;
     }
 
-    static public function loadAllFromDb(mysqli $conn) {
+    public static function loadAllFromDb(mysqli $conn) {
         $books = [];
-
         $sql = "SELECT * FROM book";
         $result = $conn->query($sql);
-        if ($result && $result->num_rows > 0) {
+        if ($result->num_rows > 0) {
             foreach ($result as $row) {
                 $book = new Book;
                 $book->bookAuthor = $row['book_author'];
                 $book->bookDescription = $row['book_description'];
                 $book->bookTitle = $row['book_title'];
                 $book->bookId = $row['book_id'];
-                $books[$book->bookId] = $book;
+                $books[] = $book;
             }
-            return $books;
-        } else {
-            return false;
         }
+        return $books;
     }
 
     public function createBook(mysqli $conn, $author, $title, $description) {
@@ -149,6 +146,34 @@ class Book implements JsonSerializable {
             'bookdescription' => $this->bookDescription,
             'bookid' => $this->bookId
         ];
+    }
+    
+    public function saveToDb(mysqli $conn) {
+        if ($this->bookId == -1) {
+            $statement = $conn->prepare("INSERT INTO book (book_author, book_title, "
+                    . "book_description) VALUES (?, ?, ?)");
+            $statement->bind_param('sss', $this->bookAuthor, $this->bookTitle, 
+                    $this->bookDescription);
+            if ($statement->execute()) {
+                $this->bookId = $statement->insert_id;
+                $statement->close();
+                return true;
+            } else {
+                $statement->close();
+                return false;
+            }
+        } else {
+            $statement = $conn->prepare("UPDATE book SET book_author = ?, "
+                    . "book_title = ?, book_description = ? WHERE book_id = ?");
+            $statement->bind_param('sssi', $this->bookAuthor, $this->bookTitle, 
+                    $this->bookDescription, $this->bookId);
+            if ($statement->execute()) {
+                $statement->close();
+                return true;
+            }
+            $statement->close();
+            return false;
+        }
     }
 
 }

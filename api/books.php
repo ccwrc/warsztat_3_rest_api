@@ -8,14 +8,12 @@ $conn = getDbConnection();
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if (isset($_GET["id"]) && trim($_GET["id"]) != "" && is_numeric($_GET["id"]) 
             && ($_GET["id"] > 0)) {
-        
+
         $book = Book::loadFromDbById($conn, $_GET["id"]);
-        $serializedData = json_encode($book);
-        echo $serializedData;
+        echo json_encode($book);
     } else {
         $books = Book::loadAllFromDb($conn);
-        $serializedData = json_encode($books);
-        echo $serializedData;
+        echo json_encode($books);
     }
 }
 
@@ -24,13 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             && (trim($_POST["title"]) != "") && isset($_POST["description"]) 
             && (trim($_POST["description"]) != "")) {
 
-        $author = $_POST["author"];
-        $title = $_POST["title"];
-        $description = $_POST["description"];
-
-        $book = new Book();
-        $book->createBook($conn, $author, $title, $description);
-        echo json_encode($book);
+        $book = Book::createBook($_POST["author"], $_POST["title"], $_POST["description"]);
+        if ($book->saveToDb($conn)) {
+            echo json_encode($book);
+        }
     }
 }
 

@@ -70,8 +70,10 @@ class Book implements JsonSerializable {
             $book->bookTitle = $row['book_title'];
             $book->bookDescription = $row['book_description'];
             $book->bookId = $row['book_id'];
+            $statement->close();
             return $book;
         }
+        $statement->close();
         return false;
     }
 
@@ -92,7 +94,7 @@ class Book implements JsonSerializable {
         return $books;
     }
 
-    public function createBook(mysqli $conn, $author, $title, $description) {
+    public function createBook2(mysqli $conn, $author, $title, $description) {
         $author = $conn->real_escape_string(htmlentities($author, ENT_QUOTES, "UTF-8"));
         $title = $conn->real_escape_string(htmlentities($title, ENT_QUOTES, "UTF-8"));
         $description = $conn->real_escape_string(htmlentities($description, ENT_QUOTES, "UTF-8"));
@@ -108,6 +110,15 @@ class Book implements JsonSerializable {
         } else {
             return false;
         }
+    }
+    
+    public static function createBook($author, $title, $description) {
+        $book = new Book();
+        $book->setBookAuthor($author)->setBookTitle($title)->setBookDescription($description);
+        if ($book) {
+            return $book;
+        }
+        return false;
     }
 
     public function updateBook(mysqli $conn, $author, $title, $description, $id) {

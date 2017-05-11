@@ -6,7 +6,6 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
 
     public function getConnection() {
         $conn = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
-       // $conn->query("SET CHARSET UTF8");
         return new PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection($conn, $GLOBALS['DB_NAME']);
     }
 
@@ -18,7 +17,6 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
         self::$myConn = new mysqli(
                 $GLOBALS['DB_HOST'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'], $GLOBALS['DB_NAME']
         );
-      //  self::$myConn->query("SET CHARSET UTF8");
         self::$emptyBook = new Book();
     }
 
@@ -78,6 +76,13 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertFalse(Book::createBook("a", "b", "  "));
         $this->assertFalse(Book::createBook("  ", "b", "c"));
         $this->assertInstanceOf("Book", Book::createBook("0", "0", "0"));
+    }
+    
+    public function testUpdateBook() {
+        $book = Book::loadFromDbById(self::$myConn, 5);
+        $book->updateBook("a", "b", "c");
+        $this->assertEquals("a", $book->getBookAuthor());
+        $this->assertFalse($book->updateBook("a", "b", " "));
     }
     
     

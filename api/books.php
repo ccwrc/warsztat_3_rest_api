@@ -29,12 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
-    parse_str(file_get_contents("php://input"), $delVars);
-    $book = Book::deleteFromDb($conn, $delVars["id"]);
-    echo json_encode($book);
-}
-
 if ($_SERVER["REQUEST_METHOD"] === "PUT") {
     parse_str(file_get_contents("php://input"), $putVars);
 
@@ -42,6 +36,15 @@ if ($_SERVER["REQUEST_METHOD"] === "PUT") {
     $book->updateBook($putVars["author"], $putVars["title"], $putVars["description"]);
     if ($book->saveToDb($conn)) {
         echo json_encode($book);
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
+    parse_str(file_get_contents("php://input"), $delVars);
+
+    $bookToDelete = Book::deleteFromDb($conn, $delVars["id"]);
+    if ($bookToDelete) {
+        echo json_encode($bookToDelete);
     }
 }
 

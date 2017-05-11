@@ -111,15 +111,19 @@ class Book implements JsonSerializable {
         return false;
     }
 
-    static public function deleteFromDb(mysqli $conn, $id) {
-        $id = $conn->real_escape_string(htmlentities($id, ENT_QUOTES, "UTF-8"));
-
-        $sql = "DELETE FROM book WHERE book_id = $id";
-        if ($conn->query($sql)) {
-            return true;
-        } else {
+    public static function deleteFromDb(mysqli $conn, $id) {
+        if (!is_numeric($id) || $id < 0) {
             return false;
+        }    
+        $statement = $conn->prepare("DELETE FROM book WHERE book_id = ?");
+        $statement->bind_param('i', $id);
+
+        if ($statement->execute()) {
+            $statement->close();
+            return true;
         }
+        $statement->close();
+        return false;
     }
 
     public function jsonSerialize() {

@@ -34,46 +34,45 @@ class Book implements JsonSerializable {
             $bookTitle = htmlentities(trim($bookTitle), ENT_QUOTES, "UTF-8");
             $this->bookTitle = $bookTitle;
             return $this;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public function setBookAuthor($bookAuthor) {
-        if (is_string($bookAuthor) && (strlen($bookAuthor) <= 255)) {
+        if ((strlen(trim($bookAuthor)) >= 1) && (strlen(trim($bookAuthor)) <= 255)) {
+            $bookAuthor = htmlentities(trim($bookAuthor), ENT_QUOTES, "UTF-8");
             $this->bookAuthor = $bookAuthor;
             return $this;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function setBookDescription($bookDescription) {
-        if (is_string($bookDescription) && (strlen($bookDescription) <= 25000)) {
+        if ((strlen(trim($bookDescription)) >= 1) && (strlen(trim($bookDescription)) <= 25000)) {
+            $bookDescription = htmlentities(trim($bookDescription), ENT_QUOTES, "UTF-8");
             $this->bookDescription = $bookDescription;
             return $this;
-        } else {
-            return false;
         }
+        return false;
     }
+    
+    public static function loadFromDbById(mysqli $conn, $bookId) {
+        $statement = $conn->prepare("SELECT * FROM book WHERE book_id = ?");
+        $statement->bind_param('i', $bookId);
+        $statement->execute();
+        $result = $statement->get_result();
 
-    static public function loadFromDbById(mysqli $conn, $id) {
-        $id = $conn->real_escape_string(htmlentities($id, ENT_QUOTES, "UTF-8"));
-
-        $sql = "SELECT book_author, book_title, book_description "
-                . "FROM book WHERE book_id = $id";
-        $result = $conn->query($sql);
-        if ($result) {
+        if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
+
             $book = new Book();
             $book->bookAuthor = $row['book_author'];
             $book->bookTitle = $row['book_title'];
             $book->bookDescription = $row['book_description'];
-            $book->bookId = $id;
+            $book->bookId = $row['book_id'];
             return $book;
-        } else {
-            return false;
         }
+        return false;
     }
 
     static public function loadAllFromDb(mysqli $conn) {

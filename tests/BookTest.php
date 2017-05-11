@@ -6,7 +6,7 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
 
     public function getConnection() {
         $conn = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
-        $conn->query("SET CHARSET UTF8");
+       // $conn->query("SET CHARSET UTF8");
         return new PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection($conn, $GLOBALS['DB_NAME']);
     }
 
@@ -18,6 +18,7 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
         self::$myConn = new mysqli(
                 $GLOBALS['DB_HOST'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'], $GLOBALS['DB_NAME']
         );
+      //  self::$myConn->query("SET CHARSET UTF8");
         self::$emptyBook = new Book();
     }
 
@@ -46,5 +47,26 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
         $this->assertEquals("title", self::$emptyBook->getBookTitle());
         $this->assertFalse(self::$emptyBook->setBookTitle("    "));
     }
+    
+    public function testSetBookAuthor() {
+        self::$emptyBook->setBookAuthor("author");
+        $this->assertEquals("author", self::$emptyBook->getBookAuthor());
+        $this->assertFalse(self::$emptyBook->setBookAuthor("    "));
+    }
+    
+    public function testSetBookDescription() {
+        self::$emptyBook->setBookDescription("desc");
+        $this->assertEquals("desc", self::$emptyBook->getBookDescription());
+        $this->assertFalse(self::$emptyBook->setBookDescription("    "));
+    }
+    
+    public function testLoadFromDbById() {
+        $book = Book::loadFromDbById(self::$myConn, 3);
+        $this->assertEquals("autor 3 książki", $book->getBookAuthor());
+        $this->assertFalse(Book::loadFromDbById(self::$myConn, 33));
+        $this->assertFalse(Book::loadFromDbById(self::$myConn, "abc"));
+    }
+    
+    
 
 }

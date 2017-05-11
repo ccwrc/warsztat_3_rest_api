@@ -93,50 +93,22 @@ class Book implements JsonSerializable {
         }
         return $books;
     }
-
-    public function createBook2(mysqli $conn, $author, $title, $description) {
-        $author = $conn->real_escape_string(htmlentities($author, ENT_QUOTES, "UTF-8"));
-        $title = $conn->real_escape_string(htmlentities($title, ENT_QUOTES, "UTF-8"));
-        $description = $conn->real_escape_string(htmlentities($description, ENT_QUOTES, "UTF-8"));
-
-        $sql = "INSERT INTO book (book_author, book_title, book_description)"
-                . " VALUES ('$author', '$title', '$description')";
-        if ($conn->query($sql)) {
-            $this->bookAuthor = $author;
-            $this->bookTitle = $title;
-            $this->bookDescription = $description;
-            $this->bookId = $conn->insert_id;
-            return true;
-        } else {
-            return false;
-        }
-    }
     
     public static function createBook($author, $title, $description) {
         $book = new Book();
-        $book->setBookAuthor($author)->setBookTitle($title)->setBookDescription($description);
-        if ($book) {
+        if ($book->setBookAuthor($author) && $book->setBookTitle($title) 
+                && $book->setBookDescription($description)) {
             return $book;
         }
         return false;
     }
-
-    public function updateBook(mysqli $conn, $author, $title, $description, $id) {
-        $author = $conn->real_escape_string(htmlentities($author, ENT_QUOTES, "UTF-8"));
-        $title = $conn->real_escape_string(htmlentities($title, ENT_QUOTES, "UTF-8"));
-        $description = $conn->real_escape_string(htmlentities($description, ENT_QUOTES, "UTF-8"));
-        $id = $conn->real_escape_string(htmlentities($id, ENT_QUOTES, "UTF-8"));
-
-        $sql = "UPDATE book SET book_author = '$author', book_title = '$title', "
-                . "book_description = '$description' WHERE book_id = $id";
-        if ($conn->query($sql)) {
-            $this->bookAuthor = $author;
-            $this->bookTitle = $title;
-            $this->bookDescription = $description;
-            return true;
-        } else {
-            return false;
+    
+    public function updateBook($author, $title, $description) {
+        if ($this->setBookAuthor($author) && $this->setBookTitle($title) 
+                && $this->setBookDescription($description)) {
+            return $this;
         }
+        return false;
     }
 
     static public function deleteFromDb(mysqli $conn, $id) {

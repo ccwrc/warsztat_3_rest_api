@@ -37,14 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
 
 if ($_SERVER["REQUEST_METHOD"] === "PUT") {
     parse_str(file_get_contents("php://input"), $putVars);
-    $id = $putVars["id"];
-    $author = $putVars["author"];
-    $title = $putVars["title"];
-    $description = $putVars["description"];
 
-    $book = new Book();
-    $book->updateBook($conn, $author, $title, $description, $id);
-    echo json_encode($book);
+    $book = Book::loadFromDbById($conn, $putVars["id"]);
+    $book->updateBook($putVars["author"], $putVars["title"], $putVars["description"]);
+    if ($book->saveToDb($conn)) {
+        echo json_encode($book);
+    }
 }
 
 $conn->close();

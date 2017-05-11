@@ -74,7 +74,10 @@ class BookTest extends PHPUnit_Extensions_Database_TestCase {
     }
     
     public function testCreateBook() {
-        //
+        $this->assertInstanceOf("Book", Book::createBook("a", "b", "c"));
+        $this->assertFalse(Book::createBook("a", "b", "  "));
+        $this->assertFalse(Book::createBook("  ", "b", "c"));
+        $this->assertInstanceOf("Book", Book::createBook("0", "0", "0"));
     }
     
     

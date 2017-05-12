@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             && (trim($_POST["description"]) != "")) {
 
         $book = Book::createBook($_POST["author"], $_POST["title"], $_POST["description"]);
-        if ($book->saveToDb($conn)) {
-            echo json_encode($book);
+        if ($book->saveToDb($conn)) { 
+            echo json_encode($book);  
         }
     }
 }

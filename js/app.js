@@ -5,6 +5,56 @@ $(document).ready(function () {
 
     addEventToCreateNewBook();
     loadAndShowAllBooks();
+    
+    function addEventToCreateNewBook() {
+        $('form[name="addBook"]').on('submit', function (e) {
+            e.preventDefault();
+
+            var indexForm = {
+                'title': $('input[name="title"]').val(),
+                'author': $('input[name="author"]').val(),
+                'description': $('input[name="description"]').val()
+            };
+
+            $.ajax({
+                url: endpoint,
+                data: indexForm,
+                type: "POST",
+                dataType: "json"
+            })
+                    .done(function (json) {
+                        alert("Książka dodana");
+                        window.location.reload(true);
+                    })
+                    .fail(function () {
+                        alert("Błąd dodawania książki, spróbuj ponownie później");
+                    });
+        });
+    }    
+    
+    function loadAndShowAllBooks() {
+        $.ajax({
+            url: endpoint,
+            data: {},
+            type: "GET",
+            dataType: "json"
+        })
+                .done(function (json) {
+                    var books = json;
+                    $.each(books, function (object, book) {
+                        var book = $("<div id='" + book.bookid + "''class='displayBook'>" + book.booktitle
+                                + "</div>");
+                        $('.booksList').append(book);
+                    });
+
+                    var title = $('.booksList div');
+                    title.one('click', showBookDetails);
+                })
+
+                .fail(function () {
+                    alert("Baza książek jest pusta");
+                });
+    }    
 
     function showBookDetails() {
         var display = $(this);
@@ -41,7 +91,6 @@ $(document).ready(function () {
 
     function deleteBook() {
         var bookToDelete = $(this).attr('value');
-        console.log(bookToDelete);
         $.ajax({
             url: endpoint,
             data: 'id=' + bookToDelete,
@@ -77,56 +126,6 @@ $(document).ready(function () {
                 })
                 .fail(function () {
                     alert("Książka się opiera, spróbuj później");
-                });
-    }
-
-    function addEventToCreateNewBook() {
-        $('form[name="addBook"]').on('submit', function (e) {
-            e.preventDefault();
-
-            var indexForm = {
-                'title': $('input[name="title"]').val(),
-                'author': $('input[name="author"]').val(),
-                'description': $('input[name="description"]').val()
-            };
-
-            $.ajax({
-                url: endpoint,
-                data: indexForm,
-                type: "POST",
-                dataType: "json"
-            })
-                    .done(function (json) {
-                        alert("Książka dodana");
-                        window.location.reload(true);
-                    })
-                    .fail(function () {
-                        alert("Błąd dodawania książki, spróbuj ponownie później");
-                    });
-        });
-    }
-
-    function loadAndShowAllBooks() {
-        $.ajax({
-            url: endpoint,
-            data: {},
-            type: "GET",
-            dataType: "json"
-        })
-                .done(function (json) {
-                    var books = json;
-                    $.each(books, function (object, book) {
-                        var book = $("<div id='" + book.bookid + "''class='displayBook'>" + book.booktitle
-                                + "</div>");
-                        $('.booksList').append(book);
-                    });
-
-                    var title = $('.booksList div');
-                    title.one('click', showBookDetails);
-                })
-
-                .fail(function () {
-                    alert("Baza książek jest pusta");
                 });
     }
 

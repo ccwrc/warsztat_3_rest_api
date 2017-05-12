@@ -1,12 +1,12 @@
 <?php
 
 function getDbConnection() {
-    $DB_SERVER = "localhost";
-    $DB_USERNAME = "books";
-    $DB_PASSWORD = "tajnehaslo";
-    $DB_DATABASE = "books";
+    $dbServer = "localhost";
+    $dbUsername = "books";
+    $dbPassword = "tajnehaslo";
+    $dbName = "books";
 
-    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+    $conn = new mysqli($dbServer, $dbUsername, $dbPassword, $dbName);
     $conn->query("SET CHARSET UTF8");
 
     if ($conn->connect_error) {

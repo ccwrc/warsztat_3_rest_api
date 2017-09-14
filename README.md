@@ -1,6 +1,6 @@
 # warsztat_3_rest_api
 
-Cel warsztatów: napisanie pełnej i funkcjonalnej aplikacji do wypożyczania książek
+Cel warsztatów: napisanie pełnej i funkcjonalnej aplikacji do wprowadzania książek
 metodą REST.
 
 Projekt składa się z dwóch części:       
@@ -16,7 +16,7 @@ wczytane AJAX-em z api/books.php.
 - Na górze tej strony ma być też formularz do tworzenia nowych książek wysyłający dane
 AJAX-em (metoda POST).         
 - Gdy użytkownik kliknie na nazwę książki, pod nią ma się rozwijać div z informacjami na temat tej
-strony wczytane za pomocą AJAX (GET) z endpointu api/books.php?id=....         
+książki wczytane za pomocą AJAX (GET) z endpointu api/books.php?id=....         
 - Div ten ma też zawierać formularz służący do edycji tej książki (AJAX, metoda PUT na endpoincie
 api/books.php?id=1&Name=""&autor="").             
 - Obok nazwy ma się znajdować guzik służący do usuwania książki (AJAX, metoda DELETE na
